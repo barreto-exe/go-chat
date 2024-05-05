@@ -1,7 +1,7 @@
-package com.barreto.exe.gochat.Models;
+package com.barreto.exe.gochat.models;
 
-import android.content.SharedPreferences;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.util.UUID;
 

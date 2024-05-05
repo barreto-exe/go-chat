@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GoChat"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>

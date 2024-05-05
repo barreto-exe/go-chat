@@ -1,5 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.GoChat" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+<resources>
+    <style name="Theme.GoChat" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@color/primary</item>
     </style>

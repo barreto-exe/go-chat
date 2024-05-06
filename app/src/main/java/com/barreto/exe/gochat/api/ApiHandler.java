@@ -1,15 +1,18 @@
 package com.barreto.exe.gochat.api;
 
 import com.barreto.exe.gochat.models.Chat;
+import com.barreto.exe.gochat.models.User;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public class ApiHandler {
@@ -26,8 +29,30 @@ public class ApiHandler {
 
     // Define your API interface
     interface ApiService {
+        @POST("/users")
+        Call<User> createUser(@Body User user);
+
         @GET("/{id-user}/chats")
         Call<Chat[]> getChats(@Path("id-user") String userId);
+    }
+
+    public void createUser(final User user, final ApiCallback callback) {
+        Call<User> call = apiService.createUser(user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("API error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                callback.onFailure("Network error: " + t.getMessage());
+            }
+        });
     }
 
     public void fetchChats(final String userId, final ApiCallback callback) {

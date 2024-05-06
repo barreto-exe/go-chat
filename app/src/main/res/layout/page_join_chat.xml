@@ -7,7 +7,7 @@
 
     <!--Código del chat-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/chatCodeInputLayout"
+        android:id="@+id/loginUsernameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         tools:ignore="HardcodedText">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/chatCodeEditText"
+            android:id="@+id/loginUsernameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -30,14 +30,14 @@
 
     <!--Create chat button-->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/createChatButton"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Crear chat"
+        android:text="Unirse al chat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chatCodeInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/loginUsernameLayout"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

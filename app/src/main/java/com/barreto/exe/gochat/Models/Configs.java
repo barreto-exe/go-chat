@@ -7,26 +7,22 @@ import java.util.UUID;
 
 public class Configs {
     public static String GetUserUuid(Context context) {
+        //if (true) return "123456";
 
-        if (true) return "123456";
-
-        //Try to get the GUID from Shared Preferences
         SharedPreferences sharedPrefs = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
         String guid = sharedPrefs.getString("my_guid", null);
 
-        // If the GUID is not saved, generate a new one
         if (guid != null) {
             return guid;
         }
 
-        // Generate the GUID
-        UUID newGuid = UUID.randomUUID();
+        return "";
+    }
 
-        // Save in Shared Preferences
+    public static void SaveUserUuid(Context context, String uuid) {
+        SharedPreferences sharedPrefs = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putString("my_guid", newGuid.toString());
+        editor.putString("my_guid", uuid);
         editor.apply();
-
-        return newGuid.toString();
     }
 }

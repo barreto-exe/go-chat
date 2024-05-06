@@ -19,7 +19,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
 
-    private String userId = Configs.GetUserUuid(this);
     private ApiHandler apiHandler = new ApiHandler();
 
     //array of chats
@@ -47,10 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void fetchChats()
     {
+        String userId = Configs.GetUserUuid(this);
+
         apiHandler.fetchChats(userId, new ApiHandler.ApiCallback() {
             @Override
             public void onSuccess(Object data) {
-                Chat[] chatsArray = (Chat[]) data;
+                Chat[] chatsArray = new Chat[0];
+
+                if(data != null) chatsArray = (Chat[]) data;
 
                 List<Chat> chats = new ArrayList<>(Arrays.asList(chatsArray));
                 ChatAdapter chatAdapter = new ChatAdapter(chats);

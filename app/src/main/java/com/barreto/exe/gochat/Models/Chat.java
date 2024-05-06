@@ -5,18 +5,26 @@ import java.util.Date;
 
 public class Chat implements Serializable {
 
-    public Chat(String id, String creatorId, String name, String lastMessageUsername, String lastMessage, Date lastMessageDateTime) {
+    public Chat(String id, String creatorId, String name, String description, String lastMessageUsername, String lastMessage, Date lastMessageDateTime) {
         this.id = id;
         this.creatorId = creatorId;
         this.name = name;
+        this.description = description;
         this.lastMessageUsername = lastMessageUsername;
         this.lastMessage = lastMessage;
         this.lastMessageDateTime = lastMessageDateTime;
     }
 
-    private String id, creatorId, name, lastMessageUsername, lastMessage;
+    private String id, creatorId, name, description, lastMessageUsername, lastMessage;
     private Date lastMessageDateTime;
 
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public String getCreatorId() {
         return creatorId;
     }

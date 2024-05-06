@@ -7,6 +7,9 @@ import java.util.UUID;
 
 public class Configs {
     public static String GetUserUuid(Context context) {
+
+        if (true) return "123456";
+
         //Try to get the GUID from Shared Preferences
         SharedPreferences sharedPrefs = context.getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
         String guid = sharedPrefs.getString("my_guid", null);

@@ -43,10 +43,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
 
         void setData(Chat chat) {
-            String message = chat.getLastMessageUserName() + ": " + chat.getLastMessage();
+            String message = chat.getLastMessageUsername() + ": " + chat.getLastMessage();
 
             itemBinding.textCircle.setText(chat.getName().substring(0, 1));
-            itemBinding.textName.setText(chat.getLastMessageUserName());
+            itemBinding.textName.setText(chat.getName());
             itemBinding.textMessage.setText(message);
         }
 

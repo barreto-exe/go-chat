@@ -1,5 +1,6 @@
 package com.barreto.exe.gochat.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -31,7 +32,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        createListeners();
         fetchChats();
+    }
+
+    void createListeners()
+    {
+        binding.fab.setOnClickListener(view -> {
+            //Go to the SelectCreationActivity
+            Intent intent = new Intent(MainActivity.this, SelectCreationActivity.class);
+            startActivity(intent);
+        });
     }
 
     public void fetchChats()

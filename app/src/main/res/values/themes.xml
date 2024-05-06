@@ -1,6 +1,16 @@
 <resources>
+
     <style name="Theme.GoChat" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="android:statusBarColor">@color/primary</item>
     </style>
+
+    <style name="Theme.GoChat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GoChat.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GoChat.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

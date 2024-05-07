@@ -26,18 +26,18 @@ public class LoginActivity extends AppCompatActivity {
         String userId = Configs.GetUserUuid(this);
 
         if (!userId.isEmpty()) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            String username = Configs.GetUsername(this);
+            createUser(username);
         }
         else{
             binding.loginButton.setOnClickListener(view -> {
-                createUser();
+                String username = binding.loginUsernameText.getText().toString().trim();
+                createUser(username);
             });
         }
     }
 
-    public void createUser(){
-        String username = binding.loginUsernameText.getText().toString().trim();
+    public void createUser(String username){
         User user = new User(username);
 
         apiHandler.createUser(user, new ApiHandler.ApiCallback() {
@@ -45,12 +45,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(Object data) {
                 User user = (User) data;
 
-                // Save the user uuid
                 Configs.SaveUserUuid(LoginActivity.this, user.getId());
+                Configs.SaveUsername(LoginActivity.this, user.getUsername());
 
                 // Go to the MainActivity
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+
+                finish();
             }
 
             @Override

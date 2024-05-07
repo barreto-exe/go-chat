@@ -19,10 +19,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding binding;
 
-    private ApiHandler apiHandler = new ApiHandler();
+    private final ApiHandler apiHandler = new ApiHandler();
 
-    //array of chats
-    private List<Chat> chats = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         createListeners();
+        fetchChats();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         fetchChats();
     }
 
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     {
         String userId = Configs.GetUserUuid(this);
 
-        apiHandler.fetchChats(userId, new ApiHandler.ApiCallback() {
+        apiHandler.getChats(userId, new ApiHandler.ApiCallback() {
             @Override
             public void onSuccess(Object data) {
                 Chat[] chatsArray = new Chat[0];
@@ -62,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String error) {
-                // Show error message toast
                 Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
             }
         });

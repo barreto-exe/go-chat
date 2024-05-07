@@ -43,7 +43,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
 
         void setData(Chat chat) {
-            String message = chat.getLastMessageUsername() + ": " + chat.getLastMessage();
+            // If the chat has no messages, show the last message as "No messages"
+            String message;
+            if(chat.getLastMessage().isEmpty()){
+                message = "No messages";
+            } else {
+                message = chat.getLastMessageUsername() + ": " + chat.getLastMessage();
+            }
 
             itemBinding.textCircle.setText(chat.getName().substring(0, 1));
             itemBinding.textName.setText(chat.getName());

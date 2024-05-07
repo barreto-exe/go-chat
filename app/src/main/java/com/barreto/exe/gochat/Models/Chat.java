@@ -15,6 +15,12 @@ public class Chat implements Serializable {
         this.lastMessageDateTime = lastMessageDateTime;
     }
 
+    public Chat(String creatorId, String name, String description) {
+        this.creatorId = creatorId;
+        this.name = name;
+        this.description = description;
+    }
+
     private String id, creatorId, name, description, lastMessageUsername, lastMessage;
     private Date lastMessageDateTime;
 

@@ -1,26 +1,61 @@
 package com.barreto.exe.gochat.activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.barreto.exe.gochat.R;
+import com.barreto.exe.gochat.api.ApiHandler;
+import com.barreto.exe.gochat.databinding.ActivityChatBinding;
+import com.barreto.exe.gochat.models.Chat;
+import com.barreto.exe.gochat.models.Message;
 
 public class ChatActivity extends AppCompatActivity {
+
+    private ActivityChatBinding binding;
+    private final ApiHandler apiHandler = new ApiHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_chat);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setListeners();
+
+        Chat chat = (Chat) getIntent().getSerializableExtra("chat");
+        if(chat != null){
+            binding.titleTextView.setText(chat.getName());
+            getChatMessages(chat);
+        }
+    }
+
+    void setListeners(){
+        binding.backImageView.setOnClickListener(v -> finish());
+
+        binding.infoImageView.setOnClickListener(v -> {
+            //TODO: Go to the ChatInfoActivity
         });
+    }
+
+    void getChatMessages(Chat chat){
+        if(chat != null){
+            apiHandler.getChatMessages(chat.getId().substring(0,6), new ApiHandler.ApiCallback() {
+                @Override
+                public void onSuccess(Object data) {
+                    Message[] messages = (Message[]) data;
+
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    Toast.makeText(ChatActivity.this, "Error getting chat messages", Toast.LENGTH_LONG).show();
+                    binding.progressBar.setVisibility(View.GONE);
+                }
+            });
+        }
     }
 }

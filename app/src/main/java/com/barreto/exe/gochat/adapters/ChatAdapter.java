@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.barreto.exe.gochat.databinding.ItemContainerUserBinding;
+import com.barreto.exe.gochat.listeners.ChatListener;
 import com.barreto.exe.gochat.models.Chat;
 
 import java.util.List;
@@ -14,8 +16,10 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
 
     private final List<Chat> chats;
-    public ChatAdapter(List<Chat> chats) {
+    private final ChatListener chatListener;
+    public ChatAdapter(List<Chat> chats, ChatListener chatListener) {
         this.chats = chats;
+        this.chatListener = chatListener;
     }
 
     @NonNull
@@ -43,7 +47,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
 
         void setData(Chat chat) {
-            // If the chat has no messages, show the last message as "No messages"
             String message;
             if(chat.getLastMessage().isEmpty()){
                 message = "No messages";
@@ -54,7 +57,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             itemBinding.textCircle.setText(chat.getName().substring(0, 1));
             itemBinding.textName.setText(chat.getName());
             itemBinding.textMessage.setText(message);
+            itemBinding.getRoot().setOnClickListener(v -> chatListener.onChatClicked(chat));
         }
-
     }
 }

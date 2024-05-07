@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.barreto.exe.gochat.adapters.ChatAdapter;
 import com.barreto.exe.gochat.api.ApiHandler;
 import com.barreto.exe.gochat.databinding.ActivityMainBinding;
+import com.barreto.exe.gochat.listeners.ChatListener;
 import com.barreto.exe.gochat.models.Chat;
 import com.barreto.exe.gochat.models.Configs;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ChatListener {
     public ActivityMainBinding binding;
 
     private final ApiHandler apiHandler = new ApiHandler();
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 if(data != null) chatsArray = (Chat[]) data;
 
                 List<Chat> chats = new ArrayList<>(Arrays.asList(chatsArray));
-                ChatAdapter chatAdapter = new ChatAdapter(chats);
+                ChatAdapter chatAdapter = new ChatAdapter(chats, MainActivity.this);
                 binding.chatsRecyclerView.setAdapter(chatAdapter);
             }
 
@@ -69,5 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onChatClicked(Chat chat) {
+        Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+        intent.putExtra("chat", chat);
+        startActivity(intent);
     }
 }

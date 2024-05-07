@@ -36,6 +36,9 @@ public class ApiHandler {
         @POST("/chats")
         Call<Chat> createChat(@Body Chat chat);
 
+        @GET("/chats/{id-chat}/messages")
+        Call<Void> getChatMessages(@Path("id-chat") String chatId);
+
         @POST("/chats/{id-chat}/users")
         Call<Void> joinChat(@Path("id-chat") String chatId, @Body User user);
 
@@ -93,6 +96,25 @@ public class ApiHandler {
 
             @Override
             public void onFailure(Call<Chat> call, Throwable t) {
+                callback.onFailure("Network error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getChatMessages(final String chatId, final ApiCallback callback) {
+        Call<Void> call = apiService.getChatMessages(chatId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(null);
+                } else {
+                    callback.onFailure("API error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 callback.onFailure("Network error: " + t.getMessage());
             }
         });

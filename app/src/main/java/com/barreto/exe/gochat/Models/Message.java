@@ -3,14 +3,30 @@ package com.barreto.exe.gochat.models;
 import java.util.Date;
 
 public class Message {
-    private String id, senderId, content;
+    private String id, senderId, senderUsername, content;
     private Date dateTime;
 
-    public Message(String id, String senderId, String content, Date dateTime) {
+    public Message(String id, String senderId, String senderUsername, String content, Date dateTime) {
         this.id = id;
         this.senderId = senderId;
+        this.senderUsername = senderUsername;
         this.content = content;
         this.dateTime = dateTime;
+    }
+
+    public Message(String senderId, String senderUsername, String content, Date dateTime) {
+        this.senderId = senderId;
+        this.senderUsername = senderUsername;
+        this.content = content;
+        this.dateTime = dateTime;
+    }
+
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
     }
 
     public String getId() {

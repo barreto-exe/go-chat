@@ -1,6 +1,7 @@
 package com.barreto.exe.gochat.api;
 
 import com.barreto.exe.gochat.models.Chat;
+import com.barreto.exe.gochat.models.Message;
 import com.barreto.exe.gochat.models.User;
 
 import retrofit2.Call;
@@ -37,7 +38,10 @@ public class ApiHandler {
         Call<Chat> createChat(@Body Chat chat);
 
         @GET("/chats/{id-chat}/messages")
-        Call<Void> getChatMessages(@Path("id-chat") String chatId);
+        Call<Message[]> getChatMessages(@Path("id-chat") String chatId);
+
+        @POST("/chats/{id-chat}/messages")
+        Call<Void> sendMessage(@Path("id-chat") String chatId, @Body Message message);
 
         @POST("/chats/{id-chat}/users")
         Call<Void> joinChat(@Path("id-chat") String chatId, @Body User user);
@@ -102,7 +106,26 @@ public class ApiHandler {
     }
 
     public void getChatMessages(final String chatId, final ApiCallback callback) {
-        Call<Void> call = apiService.getChatMessages(chatId);
+        Call<Message[]> call = apiService.getChatMessages(chatId);
+        call.enqueue(new Callback<Message[]>() {
+            @Override
+            public void onResponse(Call<Message[]> call, Response<Message[]> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("API error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Message[]> call, Throwable t) {
+                callback.onFailure("Network error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void sendMessage(final String chatId, final Message message, final ApiCallback callback) {
+        Call<Void> call = apiService.sendMessage(chatId, message);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

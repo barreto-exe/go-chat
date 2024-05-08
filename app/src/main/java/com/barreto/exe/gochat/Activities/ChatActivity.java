@@ -108,7 +108,7 @@ public class ChatActivity extends AppCompatActivity {
                     messages.addAll(Arrays.asList(newMessages));
 
                     //Sort messages by date
-                    messages.sort(Comparator.comparing(Message::getDateTime));
+                    //messages.sort(Comparator.comparing(Message::getDateTime));
 
                     //Notify the adapter
                     if (count == 0)

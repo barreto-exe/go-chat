@@ -16,11 +16,12 @@ import retrofit2.http.Path;
 
 public class ApiHandler {
 
-    private static final String BASE_URL = "http://192.168.1.103:8080";
+    public static final String HTTP = "http://";
+    public static final String BASE_URL = "192.168.1.103:8080";
 
     // Retrofit setup
     private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(HTTP + BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

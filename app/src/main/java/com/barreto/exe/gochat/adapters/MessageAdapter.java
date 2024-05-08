@@ -83,11 +83,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         void setData(Message message) {
             itemBinding.textMessage.setText(message.getContent());
-            itemBinding.textCircle.setText(message.getSenderId().substring(0, 1));
+            itemBinding.textCircle.setText(message.getSenderUsername().substring(0, 1));
             itemBinding.textSender.setText(message.getSenderUsername());
             itemBinding.textTime.setText(message.getDateTime().toString());
         }
-
     }
-
 }
